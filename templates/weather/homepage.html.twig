@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Bienvenue sur la météo des villes<h1>
+
+    {% set lastWeatherdId = app.session.get('last_weather_id') %}
+
+    {% if lastWeatherdId is not empty %}
+        <p>
+            Last weather seen :
+            <a href="{{ path('weather_detail', {id: lastWeatherdId}) }}">
+                {{ weathers[lastWeatherdId].city }}
+            </a>
+        </p>
+    {% endif %}
+
+    <div class="row">
+        {% for id, WeatherModel in weathers %}
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="card my-2 {{ cycle(['odd', 'even'], loop.index0) }}">
+                    <img src="{{ asset('weather/' ~ WeatherModel.weather ~ '.png') }}" class="card-img-top">
+                    <div class="card-body">
+                        {# Permet de recup le noms et l'id de l'oiseau en parcourant le tableau #}
+                        <h6 class="card-title">{{ WeatherModel.city }}</h6>
+                        <h6 class="card-title">{{ WeatherModel.date }}</h6>
+                        <h6 class="card-title">{{ WeatherModel.min }}</h6>
+                        <h6 class="card-title">{{ WeatherModel.max }}</h6>
+                        {# Permet de recup le noms et l'id de l'oiseau en parcourant le tableau #}
+                        <div class="card-body">
+
+                            {# Permet de recup le noms et l'id de l'oiseau en parcourant le tableau #}
+                            <a href="{{ path('weather_detail', {id: id}) }}" class="btn btn-primary">Voir le détail</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

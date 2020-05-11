@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Météo des Montagnes<h1>
+
+    <div class="row">
+        {% for id, WeatherModel in weathers %}
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="card my-2 {{ cycle(['odd', 'even'], loop.index0) }}">
+                    <img src="{{ asset('weather/' ~ WeatherModel.weather ~ '.png') }}" class="card-img-top">
+                    <div class="card-body">
+                        {# Permet de recup le noms et l'id de l'oiseau en parcourant le tableau #}
+                        <h5 class="card-title">{{ WeatherModel.city }}</h5>
+
+                        <h5 class="card-title">{{ WeatherModel.date }}</h5>
+                        <h5 class="card-title">{{ WeatherModel.min }}</h5>
+                        <h5 class="card-title">{{ WeatherModel.max }}</h5>
+                        {# Permet de recup le noms et l'id de l'oiseau en parcourant le tableau #}
+                        <div class="card-body">
+
+                            {# Permet de recup le noms et l'id de l'oiseau en parcourant le tableau #}
+                            <a href="{{ path('weather_detail', {id: id}) }}" class="btn btn-primary">Voir le détail</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
